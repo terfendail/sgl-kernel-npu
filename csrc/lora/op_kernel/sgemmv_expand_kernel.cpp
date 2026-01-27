@@ -146,18 +146,7 @@ public:
 private:
     __aicore__ inline void CopyInIndex(const int64_t idx)
     {
-        // Look up the LoRA index
-        int64_t weightIdx = idx;
-        uint64_t i = 0;
-        for (; i < seqLenGm_.GetSize(); i++) {
-            int64_t repeatValue = seqLenGm_.GetValue(i);
-            if (weightIdx >= repeatValue) {
-                weightIdx -= repeatValue;
-                continue;
-            }
-            break;
-        }
-        reqLoRAIndex_ = (i < seqLenGm_.GetSize()) ? loraIndicesGm_.GetValue(i) : -1;
+        reqLoRAIndex_ = (idx < seqLenGm_.GetSize()) ? seqLenGm_.GetValue(idx) : -1;
     }
 
     __aicore__ inline void ComputeLastIteration()
